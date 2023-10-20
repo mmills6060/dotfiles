@@ -10,6 +10,7 @@ Shell: Zsh
 Polybar
 Rofi
 Picom
+ranger
 
 # Shell Setup
 Zsh
