@@ -7,16 +7,16 @@
 - Shell: Zsh
 
 # i3 Setup
-Polybar
-Rofi
-Picom
-ranger
+- Polybar
+- Rofi
+- Picom
+- ranger
 
 # Shell Setup
-Zsh
-Oh my zsh
+- Zsh
+- Oh my zsh
 
 
 
 # NVIM Setup
-Treesitter
+- Treesitter
