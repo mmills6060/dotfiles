@@ -11,7 +11,11 @@ Polybar
 Rofi
 Picom
 
-# Kitty Setup
+# Shell Setup
+Zsh
+Oh my zsh
+
+
 
 # NVIM Setup
 Treesitter
