@@ -13,3 +13,8 @@
 - gotop
 - ranger
 - speedtest-cli
+
+
+# Bash
+
+- bash-completion
