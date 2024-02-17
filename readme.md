@@ -13,7 +13,7 @@
 - gotop
 - ranger
 - speedtest-cli
-
+- termdown
 
 # Bash
 
