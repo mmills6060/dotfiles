@@ -18,3 +18,7 @@
 # Bash
 
 - bash-completion
+
+# Lunarvim
+
+-ChatGPT
