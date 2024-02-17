@@ -20,3 +20,10 @@
 
 # NVIM Setup
 - Treesitter
+
+
+# CLI Tools
+- taskwarrior-tui
+- gotop
+- lvim
+- ranger
