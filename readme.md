@@ -21,4 +21,4 @@
 
 # Lunarvim
 
--ChatGPT
+- ChatGPT
