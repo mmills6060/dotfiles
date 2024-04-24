@@ -1,0 +1,28 @@
+import = ["/home/mmills/.config/alacritty/themes/themes/banbury.toml"]
+
+[font]
+size = 11
+
+
+[font.bold]
+family = "SF Mono"
+style = "Bold"
+
+[font.bold_italic]
+family = "SF Mono"
+style = "Bold Italic"
+
+[font.italic]
+family = "SF Mono"
+style = "Italic"
+
+[font.normal]
+family = "SF Mono"
+style = "Regular"
+
+[window]
+decorations = "Full"
+
+[window.dimensions]
+columns = 120
+lines = 80
