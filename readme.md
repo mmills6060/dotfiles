@@ -6,7 +6,7 @@
 - Terminal Font: San Francisco Mono
 - Shell: bash
 
-
+ 
 # CLI Tools
 - lvim
 - taskwarrior-tui
