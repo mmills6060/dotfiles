@@ -12,7 +12,36 @@ lvim.plugins = {
   { "nvim-telescope/telescope.nvim" },
   tag = '0.1.4',
   -- {"marko-cerovac/material.nvim"},
-  { "Banbury-inc/banbury.nvim" }
+  { "Banbury-inc/banbury.nvim" },
+  { "neovim/nvim-lspconfig" },
+  { "hrsh7th/nvim-cmp" },
+  { "saadparwaiz1/cmp_luasnip" },
+  {
+    "VonHeikemen/lsp-zero.nvim",
+    requres = {
+      -- LSP Support
+      { 'neovim/nvim-lspconfig' },
+      { 'williamboman/mason.nvim' },
+      { 'williamboman/mason-lspconfig.nvim' },
+
+      -- Autocompletion
+      { 'hrsh7th/nvim-cmp' },
+      { 'hrsh7th/cmp-buffer' },
+      { 'hrsh7th/cmp-path' },
+      { 'hrsh7th/cmp-cmdline' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'hrsh7th/cmp-nvim-lua' },
+      { 'saadparwaiz1/cmp_luasnip' },
+      { 'L3MON4D3/LuaSnip' },
+      { 'j-hui/fidget.nvim' },
+
+      -- Snippets
+      { 'L3MON4D3/LuaSnip' },
+      { 'rafamadriz/friendly-snippets' },
+    }
+  }
+
+
 }
 
 require('code_runner').setup({
@@ -33,6 +62,7 @@ require('code_runner').setup({
     },
   },
 })
+
 
 -- lvim.colorscheme = "nord"
 lvim.colorscheme = "material"
@@ -89,4 +119,3 @@ vim.keymap.set('i', '<C-l>', 'copilot#Accept("\\<CR>")', {
   replace_keycodes = false
 })
 vim.g.copilot_no_tab_map = true
-
