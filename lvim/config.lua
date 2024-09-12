@@ -9,6 +9,7 @@ lvim.plugins = {
   { "CRAG666/code_runner.nvim",     config = true },
   { "majutsushi/tagbar" },
   { "github/copilot.vim" },
+  -- { "neoclide/coc.nvim"  },
   { "nvim-telescope/telescope.nvim" },
   tag = '0.1.4',
   -- {"marko-cerovac/material.nvim"},
@@ -38,11 +39,55 @@ lvim.plugins = {
       -- Snippets
       { 'L3MON4D3/LuaSnip' },
       { 'rafamadriz/friendly-snippets' },
-    }
-  }
 
+    },
+
+    {
+      "metakirby5/codi.vim",
+      cmd = "Codi",
+    },
+    {
+      "nvim-telescope/telescope-project.nvim",
+      event = "BufWinEnter",
+      config = function()
+        require('telescope').load_extension('project')
+      end,
+      setup = function()
+        vim.cmd [[packadd telescope.nvim]]
+      end,
+    },
+    -- {
+    -- "Pocco81/auto-save.nvim",
+    -- config = function()
+    -- require("auto-save").setup()
+    -- end,
+    -- },
+  },
+  {
+    "folke/todo-comments.nvim",
+    event = "BufRead",
+    config = function()
+      require("todo-comments").setup()
+    end,
+  },
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup({ "css", "scss", "html", "javascript", "lua" }, {
+        RGB = true,      -- #RGB hex codes
+        RRGGBB = true,   -- #RRGGBB hex codes
+        RRGGBBAA = true, -- #RRGGBBAA hex codes
+        rgb_fn = true,   -- CSS rgb() and rgba() functions
+        hsl_fn = true,   -- CSS hsl() and hsla() functions
+        css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn = true,   -- Enable all CSS *functions*: rgb_fn, hsl_fn
+      })
+    end,
+  },
 
 }
+
+
 
 require('code_runner').setup({
   filetype = {
@@ -52,7 +97,7 @@ require('code_runner').setup({
       "java $fileNameWithoutExt"
     },
     python = "sudo python3 -u",
-    typescript = "deno run",
+    typescript = "deno run --allow-env --allow-read --allow-write --allow-net",
     rust = {
       "cd $dir &&",
       -- "rustc $fileName &&",
@@ -62,6 +107,17 @@ require('code_runner').setup({
     },
   },
 })
+
+
+lvim.builtin.alpha.dashboard.section.buttons.entries = {
+  { "f", "  Find File", "<cmd>Telescope find_files<CR>" },
+  { "r", "  Recent Files", "<cmd>Telescope oldfiles<CR>" },
+  { "p", "  Projects", "<cmd>Telescope project<CR>" }, -- Add this line
+  { "g", "  Find Text", "<cmd>Telescope live_grep<CR>" },
+  { "e", "  Open File Tree", "<cmd>NvimTreeToggle<CR>" },
+  { "c", "  Edit Config", "<cmd>edit ~/.config/lvim/config.lua<CR>" }, -- Open config button
+  { "q", "  Quit", "<cmd>q<CR>" },
+}
 
 
 -- lvim.colorscheme = "nord"
