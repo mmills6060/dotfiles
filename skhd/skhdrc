@@ -1,0 +1,20 @@
+# change window focus within space
+cmd - k : yabai -m window --focus south
+cmd - i : yabai -m window --focus north
+cmd - j : yabai -m window --focus west
+cmd - l : yabai -m window --focus east
+
+# swap windows
+shift + cmd - k : yabai -m window --swap south
+shift + cmd - i : yabai -m window --swap north
+shift + cmd - j : yabai -m window --swap west
+shift + cmd - l : yabai -m window --swap east
+
+#move window to prev and next space
+shift + cmd - p : yabai -m window --space prev
+shift + cmd - n : yabai -m window --space next
+
+# stop/start/restart yabai
+ctrl + alt - q : yabai --stop-service
+ctrl + alt - s : yabai --start-service
+ctrl + alt - r : yabai --restart-service
