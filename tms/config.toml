@@ -1,0 +1,15 @@
+[[search_dirs]]
+path = "/home/mmills/Documents"
+depth = 10
+[[search_dirs]]
+path = "/home/mmills/Documents/Banbury-Cloud"
+depth = 10
+[[search_dirs]]
+path = "/home/mmills/Documents/website"
+depth = 10
+[[search_dirs]]
+path = "/home/mmills/.config/tmux"
+depth = 10
+
+
+
