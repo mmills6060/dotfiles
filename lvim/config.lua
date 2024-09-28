@@ -10,7 +10,7 @@ lvim.plugins = {
   { "majutsushi/tagbar" },
   { "github/copilot.vim" },
   { "ThePrimeagen/harpoon" },
-  { "Telescope-file-browser.nvim" },
+  -- { "Telescope-file-browser.nvim" },
   -- { "neoclide/coc.nvim"  },
   { "nvim-telescope/telescope.nvim" },
   tag = '0.1.4',
@@ -166,28 +166,7 @@ lvim.builtin.alpha.dashboard.section.header.val = {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+lvim.keys.normal_mode["<leader>f"] = ""
 
 
 --vim.keymap.set('n', '<leader>r', ':RunCode<CR>', { noremap = true, silent = false })
@@ -207,12 +186,10 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
 vim.keymap.set('n', '<C-e>', ':set invrelativenumber<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<C-p>', ':lua require("harpoon.ui").nav_next()<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<C-n>', ':lua require("harpoon.ui").nav_prev()<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>hh', ':lua require("harpoon.ui").toggle_quick_menu()<CR>',
+vim.keymap.set('n', '<leader>fhh', ':lua require("harpoon.ui").toggle_quick_menu()<CR>',
   { noremap = false, silent = true })
-vim.keymap.set('n', '<leader>ha', ':lua require("harpoon.mark").add_file()<CR>', { noremap = false, silent = true })
+vim.keymap.set('n', '<leader>fha', ':lua require("harpoon.mark").add_file()<CR>', { noremap = false, silent = true })
 vim.keymap.set('n', '<leader>ff', ':Telescope find_files<CR>', { noremap = true, silent = true }) -- Find files
-vim.keymap.set('n', '<leader>f', '', { noremap = true, silent = true })                           -- Live grep
-vim.keymap.set('n', '<leader>fk', ':Telescope find_files<CR>', { noremap = true, silent = true }) -- Find files
 vim.keymap.set('n', '<leader>fp', ':Telescope project<CR>', { noremap = true, silent = true })
 vim.keymap.set('i', '<C-l>', 'copilot#Accept("\\<CR>")', {
   expr = true,
