@@ -10,8 +10,7 @@ require('packer').startup(function(use)
   use 'nvim-lua/plenary.nvim'
 
   -- Harpoon: Mark files and quickly navigate between them
-  use 'ThePrimeagen/harpoon'
-
+  use 'ThePrimeagen/harpoon' use 'Banbury-inc/banbury.nvim'
 use {
 	"lukas-reineke/indent-blankline.nvim",
 	config = function()
@@ -49,11 +48,67 @@ use {
 		  {'rafamadriz/friendly-snippets'},
 	  }
   }
-  
 
 
   use({"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"})
   use("nvim-treesitter/playground")
+
+
+use {
+    'kyazdani42/nvim-tree.lua',
+    requires = 'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    config = function()
+        require('nvim-tree').setup {
+            view = {
+                width = 30,
+                side = 'left',
+            },
+            update_cwd = true,
+            filters = {
+                dotfiles = false,
+            },
+        }
+    end
+}
+
+
+use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+}
+
+
+--use {
+--    'rose-pine/neovim',
+--    as = 'rose-pine',
+--    config = function()
+--        require('rose-pine').setup({
+--            variant = 'main', -- Options are 'main', 'moon', or 'dawn'
+--            dark_variant = 'moon', -- Optional: set a different variant for dark mode
+--            bold_vert_split = false,
+--            dim_nc_background = true,
+--            disable_background = false,
+--            disable_float_background = true,
+--            disable_italics = false,
+--        })
+--        vim.cmd('colorscheme rose-pine') -- Set rose-pine as the colorscheme
+--    end
+--}
+
+
+
+use {
+    'shaunsingh/nord.nvim',
+    config = function()
+        require('nord').set()
+    vim.cmd('colorscheme nord')
+    vim.cmd('highlight Normal guifg=#F8F8F2 guibg=#212121')
+    end
+}
+
+
   
 
   use("github/copilot.vim")
@@ -68,6 +123,8 @@ end)
 
 
 local builtin = require('telescope.builtin')
+
+
 
 
 vim.g.mapleader = " "
@@ -93,12 +150,30 @@ vim.api.nvim_set_keymap('n', '<leader>4', ':lua require("harpoon.ui").nav_file(4
 vim.api.nvim_set_keymap('v', 'y', '"+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', 'yy', '"+yy', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'Y', '"+yg_', { noremap = true, silent = true })
-
 -- Paste from system clipboard
 vim.api.nvim_set_keymap('n', 'p', '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>/', 'gcc', { noremap = false, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>/', 'gc', { noremap = false, silent = true })
+
+vim.api.nvim_set_keymap('n', ':q<CR>', ':q!<CR>', { noremap = true, silent = true })
 
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tms<CR>")
+
+vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+
+
+--vim.cmd [[
+--  highlight Normal guifg=#F8F8F2 guibg=#282A36
+--  highlight Comment guifg=#6272A4 cterm=italic
+--  highlight Keyword guifg=#FF79C6
+--  highlight Function guifg=#50FA7B
+--  highlight String guifg=#F1FA8C
+--  highlight Type guifg=#BD93F9
+--]]
+
+
+
 
 -- More optional configurations as needed
 vim.opt.clipboard:append("unnamedplus")
