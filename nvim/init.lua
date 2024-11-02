@@ -10,7 +10,7 @@ require('packer').startup(function(use)
   use 'nvim-lua/plenary.nvim'
 
   -- Harpoon: Mark files and quickly navigate between them
-  use 'ThePrimeagen/harpoon' use 'Banbury-inc/banbury.nvim'
+  use 'ThePrimegen/harpoon'
 use {
 	"lukas-reineke/indent-blankline.nvim",
 	config = function()
@@ -19,14 +19,11 @@ use {
 	end
 }
 
-
-
 use {
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
     
 }
-
   use {
 	  'VonHeikemen/lsp-zero.nvim',
 	  branch = 'v1.x',
@@ -51,6 +48,8 @@ use {
   }
 
 
+
+
   use({"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"})
   use("nvim-treesitter/playground")
 
@@ -71,6 +70,9 @@ use {
 --         }
 --     end
 -- }
+
+
+
 
 
 use {
@@ -100,21 +102,44 @@ use {
 
 
 
+-- use 
+--     'shaunsingh/nord.nvim',
+--     config = function()
+--         require('nord').set()
+--     vim.cmd('colorscheme nord')
+--     vim.cmd('highlight Normal guifg=#F8F8F2 guibg=#212121')
+--     end
+-- }
+
+
 use {
-    'shaunsingh/nord.nvim',
+    'Mofiqul/vscode.nvim',
     config = function()
-        require('nord').set()
-    vim.cmd('colorscheme nord')
-    vim.cmd('highlight Normal guifg=#F8F8F2 guibg=#212121')
+        require('vscode').setup({
+            -- Add any specific configuration here, like transparent backgrounds
+            transparent = false, -- Set to true if you prefer transparency
+        })
+        vim.cmd('colorscheme vscode')
+        vim.cmd('highlight Normal guifg=#dbdbdb guibg=#212121')
     end
 }
 
+
+use {
+    'neoclide/coc.nvim',
+    branch = 'release'
+}
+
+
+  -- use("Banbury-inc/banbury.nvim")
 
   
 
   use("github/copilot.vim")
   -- Optional: Add more plugins here as needed
-
+  --
+-- Disable default Tab mapping for Copilot
+vim.g.copilot_no_tab_map = true
 
   -- Automatically set up your configuration after cloning packer.nvim
   if packer_bootstrap then
@@ -157,11 +182,19 @@ vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>/', 'gcc', { noremap = false, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>/', 'gc', { noremap = false, silent = true })
 vim.api.nvim_set_keymap('n', ':q<CR>', ':q!<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>e', ':Ex<CR>', { noremap = true, silent = true })
+-- Use `gd` to go to definition
+vim.api.nvim_set_keymap('n', 'gd', '<Plug>(coc-definition)', { silent = true })
+-- Show documentation on hover with `K`
+vim.api.nvim_set_keymap('n', 'K', ":call CocAction('doHover')<CR>", { silent = true })
+
+-- Unmap the default Tab binding for Copilot in insert mode
+vim.api.nvim_set_keymap("i", "<Tab>", "<Nop>", { noremap = true, silent = true })
+
+-- Map Control-l to accept Copilot suggestions
+vim.api.nvim_set_keymap("i", "<C-l>", 'copilot#Accept("<CR>")', { silent = true, expr = true, noremap = true })
+
 
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tms<CR>")
-
-
 
 
 --vim.cmd [[
@@ -189,5 +222,6 @@ vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.cursorline = true
 --vim.opt.cursorlineopt = "number"
+
 
 
