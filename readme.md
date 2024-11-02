@@ -9,7 +9,7 @@
 # Terminal Keybinds
 
 - Ctrl - f = search projects directories
-- Ctrl - t = search folderrs in projects directories
+- Ctrl - t = search folders in projects directories
 
 # Terminal Commands
 
