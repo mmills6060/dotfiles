@@ -26,10 +26,14 @@
 - Ctrl - q = quit session
 - Ctrl - w = session viewer
 
- # Nvim Commands
+ # Nvim Netrw 
 
- - d = make direcotry
- - % - new file
+ 
+ - n - new file
+ - N - new directory
+ - d = delete file/directory
+ - -r rename file/directory
+ 
 
 
 # CLI Tools
