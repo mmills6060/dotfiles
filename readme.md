@@ -17,6 +17,12 @@
 - f = search entire computer
 - fp = search projects directory
 - t = nvim .
+
+ # Tmux Commands
+
+- Ctrl - e = new session
+- Ctrl - q = quit session
+- Ctrl - w = session viewer
  
 # CLI Tools
 - lvim
