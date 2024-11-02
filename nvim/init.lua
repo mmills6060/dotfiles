@@ -181,11 +181,14 @@ vim.api.nvim_set_keymap('n', 'p', '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>/', 'gcc', { noremap = false, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>/', 'gc', { noremap = false, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>e', ':Ex<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', ':q<CR>', ':q!<CR>', { noremap = true, silent = true })
 -- Use `gd` to go to definition
 vim.api.nvim_set_keymap('n', 'gd', '<Plug>(coc-definition)', { silent = true })
 -- Show documentation on hover with `K`
 vim.api.nvim_set_keymap('n', 'K', ":call CocAction('doHover')<CR>", { silent = true })
+
+
 
 -- Unmap the default Tab binding for Copilot in insert mode
 vim.api.nvim_set_keymap("i", "<Tab>", "<Nop>", { noremap = true, silent = true })
