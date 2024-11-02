@@ -24,6 +24,23 @@ use {
     requires = { {'nvim-lua/plenary.nvim'} }
     
 }
+
+require('telescope').setup {
+    scroll_strategy = "center",
+    defaults = {
+        -- Enable preview for grep results
+        layout_config = {
+            horizontal = {
+                preview_width = 0.6,
+            },
+        },
+        sorting_strategy = "ascending",
+        dynamic_preview_title = true,
+    }
+}
+
+
+
   use {
 	  'VonHeikemen/lsp-zero.nvim',
 	  branch = 'v1.x',
@@ -187,7 +204,8 @@ vim.api.nvim_set_keymap('n', ':q<CR>', ':q!<CR>', { noremap = true, silent = tru
 vim.api.nvim_set_keymap('n', 'gd', '<Plug>(coc-definition)', { silent = true })
 -- Show documentation on hover with `K`
 vim.api.nvim_set_keymap('n', 'K', ":call CocAction('doHover')<CR>", { silent = true })
-
+-- Keybinding to open live grep with preview
+vim.api.nvim_set_keymap('n', '<leader>st', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = true })
 
 
 -- Unmap the default Tab binding for Copilot in insert mode
