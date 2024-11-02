@@ -6,6 +6,17 @@
 - Terminal Font: San Francisco Mono
 - Shell: bash
 
+# Terminal Keybinds
+
+- Ctrl - f = search specific directories
+
+# Terminal Commands
+
+- lvim = Lunarvim text editor
+- ranger = file explorer
+- f = search entire computer
+- fp = search projects directory
+- t = nvim .
  
 # CLI Tools
 - lvim
