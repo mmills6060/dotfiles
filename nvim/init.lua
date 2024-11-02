@@ -10,7 +10,15 @@ require('packer').startup(function(use)
   use 'nvim-lua/plenary.nvim'
 
   -- Harpoon: Mark files and quickly navigate between them
-  use 'ThePrimegen/harpoon'
+
+use {
+    "ThePrimeagen/harpoon",
+    config = function()
+        require("harpoon").setup({})
+    end
+}
+
+
 use {
 	"lukas-reineke/indent-blankline.nvim",
 	config = function()
@@ -21,7 +29,6 @@ use {
 
 use {
     'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} }
     
 }
 
@@ -38,7 +45,6 @@ require('telescope').setup {
         dynamic_preview_title = true,
     }
 }
-
 
 
   use {
@@ -168,14 +174,10 @@ end)
 local builtin = require('telescope.builtin')
 
 
-
-
 vim.g.mapleader = " "
--- Keybindings to add, toggle, or navigate to marks
-vim.api.nvim_set_keymap('n', '<leader>ha', ':lua require("harpoon.mark").add_file()<CR>',
-  { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>hh', ':lua require("harpoon.ui").toggle_quick_menu()<CR>',
-  { noremap = true, silent = true })
+-- Keybindings for Harpoon
+vim.api.nvim_set_keymap('n', '<leader>ha', ':lua require("harpoon.mark").add_file()<CR>', { noremap = true, silent = true })  -- Add file to Harpoon
+vim.api.nvim_set_keymap('n', '<leader>hh', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', { noremap = true, silent = true })  -- Toggle Harpoon menu
 
 vim.api.nvim_set_keymap('n', '<leader>ff', ':lua require("telescope.builtin").find_files()<CR>',
   { noremap = true, silent = true })
