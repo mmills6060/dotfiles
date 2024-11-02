@@ -59,8 +59,22 @@ fp() {
   fi
 }
 
+
+fd() {
+  # Use `find` to locate directories within the specified base directory
+  local dir=$(find ~/Documents ~/Projects -type d | fzf)
+
+  # If a directory is selected, change to that directory
+  if [[ -n "$dir" ]]; then
+    cd "$dir" || return
+    # Optionally, print the new directory path
+    echo "Changed directory to: $dir"
+  fi
+}
+
 bind '"\C-g":"fp\n"'
 bind '"\C-f":"fp\n"'
+bind '"\C-t":"fd\n"'
 
 
 
