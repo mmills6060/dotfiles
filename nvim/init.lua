@@ -5,20 +5,15 @@ vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function(use)
   -- Packer itself
   use 'wbthomason/packer.nvim'
-
   -- Utility library for plugins (required by many plugins)
   use 'nvim-lua/plenary.nvim'
-
   -- Harpoon: Mark files and quickly navigate between them
-
 use {
     "ThePrimeagen/harpoon",
     config = function()
         require("harpoon").setup({})
     end
 }
-
-
 use {
 	"lukas-reineke/indent-blankline.nvim",
 	config = function()
@@ -26,12 +21,7 @@ use {
 		})
 	end
 }
-
-use {
-    'nvim-telescope/telescope.nvim',
-    
-}
-
+use {'nvim-telescope/telescope.nvim',}
 require('telescope').setup {
     scroll_strategy = "center",
     defaults = {
@@ -45,8 +35,6 @@ require('telescope').setup {
         dynamic_preview_title = true,
     }
 }
-
-
   use {
 	  'VonHeikemen/lsp-zero.nvim',
 	  branch = 'v1.x',
@@ -69,10 +57,6 @@ require('telescope').setup {
 		  {'rafamadriz/friendly-snippets'},
 	  }
   }
-
-
-
-
   use({"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"})
   use("nvim-treesitter/playground")
 
@@ -93,10 +77,6 @@ require('telescope').setup {
 --         }
 --     end
 -- }
-
-
-
-
 
 use {
     'numToStr/Comment.nvim',
@@ -183,14 +163,11 @@ vim.api.nvim_set_keymap('n', '<leader>ff', ':lua require("telescope.builtin").fi
   { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>fg', ':lua require("telescope.builtin").live_grep()<CR>',
   { noremap = true, silent = true })
-
+vim.api.nvim_set_keymap('n', '<leader>fp', ':lua require("telescope.builtin").find_files({ cwd = "~/Documents" })<CR>', { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<C-k>', ':lua require("harpoon.ui").nav_next()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-j>', ':lua require("harpoon.ui").nav_prev()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>1', ':lua require("harpoon.ui").nav_file(1)<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>2', ':lua require("harpoon.ui").nav_file(2)<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>3', ':lua require("harpoon.ui").nav_file(3)<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>4', ':lua require("harpoon.ui").nav_file(4)<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>h', ':noh<CR>', { noremap = true, silent = true })
 -- Yank (copy) to system clipboard
 vim.api.nvim_set_keymap('v', 'y', '"+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', 'yy', '"+yy', { noremap = true, silent = true })
@@ -210,6 +187,8 @@ vim.api.nvim_set_keymap('n', 'K', ":call CocAction('doHover')<CR>", { silent = t
 vim.api.nvim_set_keymap('n', '<leader>st', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = true })
 
 
+
+
 -- Unmap the default Tab binding for Copilot in insert mode
 vim.api.nvim_set_keymap("i", "<Tab>", "<Nop>", { noremap = true, silent = true })
 
@@ -218,6 +197,31 @@ vim.api.nvim_set_keymap("i", "<C-l>", 'copilot#Accept("<CR>")', { silent = true,
 
 
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tms<CR>")
+
+vim.api.nvim_create_autocmd('filetype', {
+  pattern = 'netrw',
+  desc = 'Better mappings for netrw',
+  callback = function()
+    local bind = function(lhs, rhs)
+      vim.keymap.set('n', lhs, rhs, {remap = true, buffer = true})
+    end 
+
+    -- add new file
+    bind('n', '%')
+
+    -- add new directory 
+    bind('N', 'd')
+
+    -- rename file
+    bind('r', 'R')
+
+    -- delete file/directory
+    bind('d', 'D')
+
+
+  end
+})
+
 
 
 --vim.cmd [[
