@@ -20,6 +20,7 @@ use {
 }
 
 
+
 use {
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
@@ -54,22 +55,22 @@ use {
   use("nvim-treesitter/playground")
 
 
-use {
-    'kyazdani42/nvim-tree.lua',
-    requires = 'nvim-tree/nvim-web-devicons', -- optional, for file icons
-    config = function()
-        require('nvim-tree').setup {
-            view = {
-                width = 30,
-                side = 'left',
-            },
-            update_cwd = true,
-            filters = {
-                dotfiles = false,
-            },
-        }
-    end
-}
+-- use {
+--     'kyazdani42/nvim-tree.lua',
+--     requires = 'nvim-tree/nvim-web-devicons', -- optional, for file icons
+--     config = function()
+--         require('nvim-tree').setup {
+--             view = {
+--                 width = 30,
+--                 side = 'left',
+--             },
+--             update_cwd = true,
+--             filters = {
+--                 dotfiles = false,
+--             },
+--         }
+--     end
+-- }
 
 
 use {
@@ -155,12 +156,12 @@ vim.api.nvim_set_keymap('n', 'p', '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>/', 'gcc', { noremap = false, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>/', 'gc', { noremap = false, silent = true })
-
 vim.api.nvim_set_keymap('n', ':q<CR>', ':q!<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>e', ':Ex<CR>', { noremap = true, silent = true })
 
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tms<CR>")
 
-vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+
 
 
 --vim.cmd [[
