@@ -59,3 +59,8 @@ font:
 
   # Point size
   size: 10
+
+
+  
+key_bindings:
+  - { key: F, mods: Control, command: { program: "bash", args: ["-c", "fp"] } }
