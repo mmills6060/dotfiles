@@ -14,6 +14,29 @@ use {
         require("harpoon").setup({})
     end
 }
+
+
+
+
+
+use {
+ "kdheepak/lazygit.nvim",
+ cmd = {
+  "LazyGit",
+  "LazyGitConfig",
+  "LazyGitCurrentFile",
+  "LazyGitFilter",
+  "LazyGitFilterCurrentFile",
+ },
+ -- optional for floating window border decoration
+ dependencies = {
+  "nvim-lua/plenary.nvim",
+ },
+ -- setting the keybinding for LazyGit with 'keys' is recommended in
+ -- order to load the plugin when the command is run for the first time
+} 
+
+
 use {
 	"lukas-reineke/indent-blankline.nvim",
 	config = function()
@@ -123,7 +146,9 @@ use {
             transparent = false, -- Set to true if you prefer transparency
         })
         vim.cmd('colorscheme vscode')
-        vim.cmd('highlight Normal guifg=#dbdbdb guibg=#212121')
+        -- vim.cmd('highlight Normal guifg=#dbdbdb guibg=#212121')
+        -- vim.cmd('highlight Normal guifg=#212121 guibg=#171717')
+        -- vim.cmd('highlight Normal guifg=#171717 guibg=#171717')
     end
 }
 
@@ -137,10 +162,8 @@ use {
   -- use("Banbury-inc/banbury.nvim")
 
   
+use("github/copilot.vim")
 
-  use("github/copilot.vim")
-  -- Optional: Add more plugins here as needed
-  --
 -- Disable default Tab mapping for Copilot
 vim.g.copilot_no_tab_map = true
 
@@ -149,6 +172,8 @@ vim.g.copilot_no_tab_map = true
     require('packer').sync()
   end
 end)
+
+
 
 
 local builtin = require('telescope.builtin')
@@ -164,6 +189,8 @@ vim.api.nvim_set_keymap('n', '<leader>ff', ':lua require("telescope.builtin").fi
 vim.api.nvim_set_keymap('n', '<leader>fg', ':lua require("telescope.builtin").live_grep()<CR>',
   { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>fp', ':lua require("telescope.builtin").find_files({ cwd = "~/Documents" })<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fb', ':lua require("telescope.builtin").buffers()<CR>',
+  { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<C-k>', ':lua require("harpoon.ui").nav_next()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-j>', ':lua require("harpoon.ui").nav_prev()<CR>', { noremap = true, silent = true })
@@ -184,8 +211,8 @@ vim.api.nvim_set_keymap('n', 'gd', '<Plug>(coc-definition)', { silent = true })
 -- Show documentation on hover with `K`
 vim.api.nvim_set_keymap('n', 'K', ":call CocAction('doHover')<CR>", { silent = true })
 -- Keybinding to open live grep with preview
-vim.api.nvim_set_keymap('n', '<leader>st', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = true })
-
+vim.api.nvim_set_keymap('n', '<leader>st', ':lua require("telescope.builtin").live_grep({ cwd = vim.fn.expand("%:p:h") })<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gg', '<cmd>LazyGitCurrentFile<CR>', { noremap = true, silent = true })
 
 
 
@@ -221,6 +248,7 @@ vim.api.nvim_create_autocmd('filetype', {
 
   end
 })
+
 
 
 
