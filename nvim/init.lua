@@ -5,266 +5,179 @@ vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function(use)
   -- Packer itself
   use 'wbthomason/packer.nvim'
+  
   -- Utility library for plugins (required by many plugins)
   use 'nvim-lua/plenary.nvim'
+  
   -- Harpoon: Mark files and quickly navigate between them
-use {
+  use {
     "ThePrimeagen/harpoon",
     config = function()
         require("harpoon").setup({})
     end
-}
-
-
-
-
-
-use {
- "kdheepak/lazygit.nvim",
- cmd = {
-  "LazyGit",
-  "LazyGitConfig",
-  "LazyGitCurrentFile",
-  "LazyGitFilter",
-  "LazyGitFilterCurrentFile",
- },
- -- optional for floating window border decoration
- dependencies = {
-  "nvim-lua/plenary.nvim",
- },
- -- setting the keybinding for LazyGit with 'keys' is recommended in
- -- order to load the plugin when the command is run for the first time
-} 
-
-
-use {
-	"lukas-reineke/indent-blankline.nvim",
-	config = function()
-		require("ibl").setup({
-		})
-	end
-}
-use {'nvim-telescope/telescope.nvim',}
-require('telescope').setup {
-    scroll_strategy = "center",
-    defaults = {
-        -- Enable preview for grep results
-        layout_config = {
-            horizontal = {
-                preview_width = 0.6,
-            },
-        },
-        sorting_strategy = "ascending",
-        dynamic_preview_title = true,
-    }
-}
-  use {
-	  'VonHeikemen/lsp-zero.nvim',
-	  branch = 'v1.x',
-	  requires = {
-		  -- LSP Support
-		  {'neovim/nvim-lspconfig'},
-		  {'williamboman/mason.nvim'},
-		  {'williamboman/mason-lspconfig.nvim'},
-
-		  -- Autocompletion
-		  {'hrsh7th/nvim-cmp'},
-		  {'hrsh7th/cmp-buffer'},
-		  {'hrsh7th/cmp-path'},
-		  {'saadparwaiz1/cmp_luasnip'},
-		  {'hrsh7th/cmp-nvim-lsp'},
-		  {'hrsh7th/cmp-nvim-lua'},
-
-		  -- Snippets
-		  {'L3MON4D3/LuaSnip'},
-		  {'rafamadriz/friendly-snippets'},
-	  }
   }
+
+  -- ESLint and Prettier with null-ls
+  use {
+    'jose-elias-alvarez/null-ls.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function()
+        local null_ls = require("null-ls")
+        null_ls.setup({
+            sources = {
+                null_ls.builtins.diagnostics.eslint,  -- ESLint for linting
+                null_ls.builtins.formatting.prettier, -- Prettier for formatting
+            },
+        })
+    end
+  }
+
+  -- Lazygit integration
+  use {
+    "kdheepak/lazygit.nvim",
+    cmd = {
+      "LazyGit",
+      "LazyGitConfig",
+      "LazyGitCurrentFile",
+      "LazyGitFilter",
+      "LazyGitFilterCurrentFile",
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+  }
+
+  -- Indentation lines
+  use {
+    "lukas-reineke/indent-blankline.nvim",
+    config = function()
+        require("ibl").setup({})
+    end
+  }
+
+  -- Telescope for fuzzy finding
+  use {'nvim-telescope/telescope.nvim'}
+  require('telescope').setup {
+      scroll_strategy = "center",
+      defaults = {
+          layout_config = {
+              horizontal = {
+                  preview_width = 0.6,
+              },
+          },
+          sorting_strategy = "ascending",
+          dynamic_preview_title = true,
+      }
+  }
+
+  -- LSP and Autocompletion
+  use {
+      'VonHeikemen/lsp-zero.nvim',
+      branch = 'v1.x',
+      requires = {
+          {'neovim/nvim-lspconfig'},
+          {'williamboman/mason.nvim'},
+          {'williamboman/mason-lspconfig.nvim'},
+          {'hrsh7th/nvim-cmp'},
+          {'hrsh7th/cmp-buffer'},
+          {'hrsh7th/cmp-path'},
+          {'saadparwaiz1/cmp_luasnip'},
+          {'hrsh7th/cmp-nvim-lsp'},
+          {'hrsh7th/cmp-nvim-lua'},
+          {'L3MON4D3/LuaSnip'},
+          {'rafamadriz/friendly-snippets'},
+      }
+  }
+
+  -- Treesitter
   use({"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"})
   use("nvim-treesitter/playground")
 
+  -- Comment plugin
+  use {
+      'numToStr/Comment.nvim',
+      config = function()
+          require('Comment').setup()
+      end
+  }
 
--- use {
---     'kyazdani42/nvim-tree.lua',
---     requires = 'nvim-tree/nvim-web-devicons', -- optional, for file icons
---     config = function()
---         require('nvim-tree').setup {
---             view = {
---                 width = 30,
---                 side = 'left',
---             },
---             update_cwd = true,
---             filters = {
---                 dotfiles = false,
---             },
---         }
---     end
--- }
+  -- VSCode theme
+  use {
+      'Mofiqul/vscode.nvim',
+      config = function()
+          require('vscode').setup({
+              transparent = false,
+          })
+          vim.cmd('colorscheme vscode')
+      end
+  }
 
-use {
-    'numToStr/Comment.nvim',
-    config = function()
-        require('Comment').setup()
-    end
-}
+  -- CoC for additional language support
+  use {
+      'neoclide/coc.nvim',
+      branch = 'release'
+  }
 
+  -- GitHub Copilot
+  use("github/copilot.vim")
 
---use {
---    'rose-pine/neovim',
---    as = 'rose-pine',
---    config = function()
---        require('rose-pine').setup({
---            variant = 'main', -- Options are 'main', 'moon', or 'dawn'
---            dark_variant = 'moon', -- Optional: set a different variant for dark mode
---            bold_vert_split = false,
---            dim_nc_background = true,
---            disable_background = false,
---            disable_float_background = true,
---            disable_italics = false,
---        })
---        vim.cmd('colorscheme rose-pine') -- Set rose-pine as the colorscheme
---    end
---}
-
-
-
--- use 
---     'shaunsingh/nord.nvim',
---     config = function()
---         require('nord').set()
---     vim.cmd('colorscheme nord')
---     vim.cmd('highlight Normal guifg=#F8F8F2 guibg=#212121')
---     end
--- }
-
-
-use {
-    'Mofiqul/vscode.nvim',
-    config = function()
-        require('vscode').setup({
-            -- Add any specific configuration here, like transparent backgrounds
-            transparent = false, -- Set to true if you prefer transparency
-        })
-        vim.cmd('colorscheme vscode')
-        -- vim.cmd('highlight Normal guifg=#dbdbdb guibg=#212121')
-        -- vim.cmd('highlight Normal guifg=#212121 guibg=#171717')
-        -- vim.cmd('highlight Normal guifg=#171717 guibg=#171717')
-    end
-}
-
-
-use {
-    'neoclide/coc.nvim',
-    branch = 'release'
-}
-
-
-  -- use("Banbury-inc/banbury.nvim")
-
-  
-use("github/copilot.vim")
-
--- Disable default Tab mapping for Copilot
-vim.g.copilot_no_tab_map = true
-
-  -- Automatically set up your configuration after cloning packer.nvim
+  -- Automatically set up configuration after cloning packer.nvim
   if packer_bootstrap then
     require('packer').sync()
   end
 end)
 
-
-
-
-local builtin = require('telescope.builtin')
-
-
+-- Leader key
 vim.g.mapleader = " "
--- Keybindings for Harpoon
-vim.api.nvim_set_keymap('n', '<leader>ha', ':lua require("harpoon.mark").add_file()<CR>', { noremap = true, silent = true })  -- Add file to Harpoon
-vim.api.nvim_set_keymap('n', '<leader>hh', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', { noremap = true, silent = true })  -- Toggle Harpoon menu
 
-vim.api.nvim_set_keymap('n', '<leader>ff', ':lua require("telescope.builtin").find_files()<CR>',
-  { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>fg', ':lua require("telescope.builtin").live_grep()<CR>',
-  { noremap = true, silent = true })
+-- Keybindings
+vim.api.nvim_set_keymap('n', '<leader>ha', ':lua require("harpoon.mark").add_file()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>hh', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', { noremap = true, silent = true })
+
+-- Telescope bindings
+vim.api.nvim_set_keymap('n', '<leader>ff', ':lua require("telescope.builtin").find_files()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fg', ':lua require("telescope.builtin").live_grep()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>fp', ':lua require("telescope.builtin").find_files({ cwd = "~/Documents" })<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>fb', ':lua require("telescope.builtin").buffers()<CR>',
-  { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fb', ':lua require("telescope.builtin").buffers()<CR>', { noremap = true, silent = true })
 
+-- Harpoon navigation
 vim.api.nvim_set_keymap('n', '<C-k>', ':lua require("harpoon.ui").nav_next()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-j>', ':lua require("harpoon.ui").nav_prev()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>h', ':noh<CR>', { noremap = true, silent = true })
--- Yank (copy) to system clipboard
+
+-- Clipboard bindings
 vim.api.nvim_set_keymap('v', 'y', '"+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', 'yy', '"+yy', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'Y', '"+yg_', { noremap = true, silent = true })
--- Paste from system clipboard
 vim.api.nvim_set_keymap('n', 'p', '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true, silent = true })
+
+-- Comment bindings
 vim.api.nvim_set_keymap('n', '<leader>/', 'gcc', { noremap = false, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>/', 'gc', { noremap = false, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>e', ':Ex<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ':q<CR>', ':q!<CR>', { noremap = true, silent = true })
--- Use `gd` to go to definition
+
+-- Format with LSP
+vim.api.nvim_set_keymap('n', '<leader>l', ':lua vim.lsp.buf.format({ async = true })<CR>', { noremap = true, silent = true })
+
+-- Map `gd` to go to definition and `K` for hover documentation
 vim.api.nvim_set_keymap('n', 'gd', '<Plug>(coc-definition)', { silent = true })
--- Show documentation on hover with `K`
 vim.api.nvim_set_keymap('n', 'K', ":call CocAction('doHover')<CR>", { silent = true })
--- Keybinding to open live grep with preview
-vim.api.nvim_set_keymap('n', '<leader>st', ':lua require("telescope.builtin").live_grep({ cwd = vim.fn.expand("%:p:h") })<CR>', { noremap = true, silent = true })
+
+-- Git keybinding
 vim.api.nvim_set_keymap('n', '<leader>gg', '<cmd>LazyGitCurrentFile<CR>', { noremap = true, silent = true })
 
+-- Yank (copy) and paste with system clipboard
+vim.api.nvim_set_keymap('v', 'y', '"+y', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'Y', '"+yg_', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true, silent = true })
 
-
--- Unmap the default Tab binding for Copilot in insert mode
-vim.api.nvim_set_keymap("i", "<Tab>", "<Nop>", { noremap = true, silent = true })
+-- Configure Tab key for Copilot
+vim.g.copilot_no_tab_map = true
+                            
 
 -- Map Control-l to accept Copilot suggestions
 vim.api.nvim_set_keymap("i", "<C-l>", 'copilot#Accept("<CR>")', { silent = true, expr = true, noremap = true })
 
-
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tms<CR>")
-
-vim.api.nvim_create_autocmd('filetype', {
-  pattern = 'netrw',
-  desc = 'Better mappings for netrw',
-  callback = function()
-    local bind = function(lhs, rhs)
-      vim.keymap.set('n', lhs, rhs, {remap = true, buffer = true})
-    end 
-
-    -- add new file
-    bind('n', '%')
-
-    -- add new directory 
-    bind('N', 'd')
-
-    -- rename file
-    bind('r', 'R')
-
-    -- delete file/directory
-    bind('d', 'D')
-
-
-  end
-})
-
-
-
-
---vim.cmd [[
---  highlight Normal guifg=#F8F8F2 guibg=#282A36
---  highlight Comment guifg=#6272A4 cterm=italic
---  highlight Keyword guifg=#FF79C6
---  highlight Function guifg=#50FA7B
---  highlight String guifg=#F1FA8C
---  highlight Type guifg=#BD93F9
---]]
-
-
-
-
--- More optional configurations as needed
+-- General Neovim options
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20"
 vim.opt.nu = true
@@ -276,7 +189,3 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.cursorline = true
---vim.opt.cursorlineopt = "number"
-
-
-
