@@ -181,6 +181,25 @@ vim.g.copilot_no_tab_map = true
 -- Map Control-l to accept Copilot suggestions
 vim.api.nvim_set_keymap("i", "<C-l>", 'copilot#Accept("<CR>")', { silent = true, expr = true, noremap = true })
 
+
+vim.api.nvim_create_autocmd('filetype', {
+  pattern = 'netrw',
+  desc = 'Better mappings for netrw',
+  callback = function()
+    local bind = function(lhs, rhs)
+      vim.keymap.set('n', lhs, rhs, {remap = true, buffer = true})
+    end 
+    -- add new file
+    bind('n', '%')
+    -- add new directory 
+    bind('N', 'd')
+    -- rename file
+    bind('r', 'R')
+    -- delete file/directory
+    bind('d', 'D')
+  end
+})
+
 -- General Neovim options
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20"
