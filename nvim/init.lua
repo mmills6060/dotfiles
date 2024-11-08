@@ -117,11 +117,11 @@ use {
       end
   }
 
-  -- -- CoC for additional language support
-  -- use {
-  --     'neoclide/coc.nvim',
-  --     branch = 'release'
-  -- }
+  -- CoC for additional language support
+  use {
+      'neoclide/coc.nvim',
+      branch = 'release'
+  }
 
   -- GitHub Copilot
   use("github/copilot.vim")
