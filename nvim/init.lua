@@ -9,6 +9,42 @@ require('packer').startup(function(use)
   -- Utility library for plugins (required by many plugins)
   use 'nvim-lua/plenary.nvim'
   
+    -- Mason for managing LSP servers and other tools
+    use {
+        "williamboman/mason.nvim",
+        config = function()
+            require("mason").setup()
+        end
+    }
+
+    -- Mason-LSPConfig integration without auto-installing LSP servers
+    use {
+        "williamboman/mason-lspconfig.nvim",
+        requires = { "neovim/nvim-lspconfig" },
+        config = function()
+            require("mason-lspconfig").setup({
+                -- Do not auto-install any servers
+                automatic_installation = false
+            })
+        end
+    }
+
+-- null-ls configuration without specific sources (auto-detect from Mason)
+use {
+    'jose-elias-alvarez/null-ls.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function()
+        local null_ls = require("null-ls")
+        null_ls.setup({
+            -- Sources will be detected dynamically by Mason
+            sources = {},
+        })
+    end
+}
+
+
+
+
   -- Harpoon: Mark files and quickly navigate between them
   use {
     "ThePrimeagen/harpoon",
@@ -17,20 +53,6 @@ require('packer').startup(function(use)
     end
   }
 
-  -- ESLint and Prettier with null-ls
-  use {
-    'jose-elias-alvarez/null-ls.nvim',
-    requires = { 'nvim-lua/plenary.nvim' },
-    config = function()
-        local null_ls = require("null-ls")
-        null_ls.setup({
-            sources = {
-                null_ls.builtins.diagnostics.eslint,  -- ESLint for linting
-                null_ls.builtins.formatting.prettier, -- Prettier for formatting
-            },
-        })
-    end
-  }
 
   -- Lazygit integration
   use {
@@ -70,29 +92,12 @@ require('packer').startup(function(use)
       }
   }
 
-  -- LSP and Autocompletion
-  use {
-      'VonHeikemen/lsp-zero.nvim',
-      branch = 'v1.x',
-      requires = {
-          {'neovim/nvim-lspconfig'},
-          {'williamboman/mason.nvim'},
-          {'williamboman/mason-lspconfig.nvim'},
-          {'hrsh7th/nvim-cmp'},
-          {'hrsh7th/cmp-buffer'},
-          {'hrsh7th/cmp-path'},
-          {'saadparwaiz1/cmp_luasnip'},
-          {'hrsh7th/cmp-nvim-lsp'},
-          {'hrsh7th/cmp-nvim-lua'},
-          {'L3MON4D3/LuaSnip'},
-          {'rafamadriz/friendly-snippets'},
-      }
-  }
 
   -- Treesitter
   use({"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"})
   use("nvim-treesitter/playground")
 
+  
   -- Comment plugin
   use {
       'numToStr/Comment.nvim',
@@ -112,11 +117,11 @@ require('packer').startup(function(use)
       end
   }
 
-  -- CoC for additional language support
-  use {
-      'neoclide/coc.nvim',
-      branch = 'release'
-  }
+  -- -- CoC for additional language support
+  -- use {
+  --     'neoclide/coc.nvim',
+  --     branch = 'release'
+  -- }
 
   -- GitHub Copilot
   use("github/copilot.vim")
@@ -126,6 +131,30 @@ require('packer').startup(function(use)
     require('packer').sync()
   end
 end)
+
+
+-- Setup LSP servers only when they are manually installed
+local mason_lspconfig = require("mason-lspconfig")
+mason_lspconfig.setup_handlers({
+    function(server_name) -- Default handler for all installed servers
+        require("lspconfig")[server_name].setup({})
+    end,
+})
+
+-- Define a global format function
+function format()
+    local clients = vim.lsp.get_active_clients({ bufnr = vim.api.nvim_get_current_buf() })
+    for _, client in ipairs(clients) do
+        if client.supports_method("textDocument/formatting") then
+            vim.lsp.buf.format({ async = true })
+            return
+        end
+    end
+    print("No formatter available.")
+end
+
+
+
 
 -- Leader key
 vim.g.mapleader = " "
@@ -160,12 +189,12 @@ vim.api.nvim_set_keymap('v', '<leader>/', 'gc', { noremap = false, silent = true
 -- CoC bindings for navigating completion suggestions without using C-n and C-p
 vim.api.nvim_set_keymap("i", "<C-j>", "coc#pum#next(1)", { silent = true, expr = true, noremap = true })  -- Move down
 vim.api.nvim_set_keymap("i", "<C-k>", "coc#pum#prev(1)", { silent = true, expr = true, noremap = true })  -- Move up
-vim.api.nvim_set_keymap("i", "<CR>", "coc#pum#visible() ? coc#pum#confirm() : '<CR>'", { silent = true, expr = true, noremap = true })  -- Confirm selection
+vim.api.nvim_set_keymap("i", "<C-;>", "coc#pum#visible() ? coc#pum#confirm() : '<CR>'", { silent = true, expr = true, noremap = true })  -- Confirm selection
 -- vim.api.nvim_set_keymap("i", "<C-e>", "coc#pum#visible() ? coc#pum#cancel() : '<C-e>'", { silent = true, expr = true, noremap = true })  -- Close completion
 
 
 -- Format with LSP
-vim.api.nvim_set_keymap('n', '<leader>l', ':lua vim.lsp.buf.format({ async = true })<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>l', ':lua format()<CR>', { noremap = true, silent = true })
 
 -- Map `gd` to go to definition and `K` for hover documentation
 vim.api.nvim_set_keymap('n', 'gd', '<Plug>(coc-definition)', { silent = true })
