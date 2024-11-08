@@ -156,6 +156,14 @@ vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>/', 'gcc', { noremap = false, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>/', 'gc', { noremap = false, silent = true })
 
+
+-- CoC bindings for navigating completion suggestions without using C-n and C-p
+vim.api.nvim_set_keymap("i", "<C-j>", "coc#pum#next(1)", { silent = true, expr = true, noremap = true })  -- Move down
+vim.api.nvim_set_keymap("i", "<C-k>", "coc#pum#prev(1)", { silent = true, expr = true, noremap = true })  -- Move up
+vim.api.nvim_set_keymap("i", "<CR>", "coc#pum#visible() ? coc#pum#confirm() : '<CR>'", { silent = true, expr = true, noremap = true })  -- Confirm selection
+-- vim.api.nvim_set_keymap("i", "<C-e>", "coc#pum#visible() ? coc#pum#cancel() : '<C-e>'", { silent = true, expr = true, noremap = true })  -- Close completion
+
+
 -- Format with LSP
 vim.api.nvim_set_keymap('n', '<leader>l', ':lua vim.lsp.buf.format({ async = true })<CR>', { noremap = true, silent = true })
 
