@@ -191,12 +191,12 @@ vim.api.nvim_create_autocmd('filetype', {
     end 
     -- add new file
     bind('n', '%')
+    --delete file/directory
+    bind('x', 'D')
     -- add new directory 
     bind('N', 'd')
     -- rename file
     bind('r', 'R')
-    -- delete file/directory
-    bind('d', 'D')
   end
 })
 
