@@ -42,9 +42,6 @@ use {
     end
 }
 
-
-
-
   -- Harpoon: Mark files and quickly navigate between them
   use {
     "ThePrimeagen/harpoon",
@@ -117,11 +114,11 @@ use {
       end
   }
 
-  -- CoC for additional language support
-  use {
-      'neoclide/coc.nvim',
-      branch = 'release'
-  }
+  -- -- CoC for additional language support
+  -- use {
+  --     'neoclide/coc.nvim',
+  --     branch = 'release'
+  -- }
 
   -- GitHub Copilot
   use("github/copilot.vim")
@@ -175,11 +172,11 @@ vim.api.nvim_set_keymap('n', '<C-k>', ':lua require("harpoon.ui").nav_next()<CR>
 vim.api.nvim_set_keymap('n', '<C-j>', ':lua require("harpoon.ui").nav_prev()<CR>', { noremap = true, silent = true })
 
 -- Clipboard bindings
-vim.api.nvim_set_keymap('v', 'y', '"+y', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', 'yy', '"+yy', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'Y', '"+yg_', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'p', '"+p', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('v', 'y', '"+y', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('v', 'yy', '"+yy', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', 'Y', '"+yg_', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', 'p', '"+p', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true, silent = true })
 
 -- Comment bindings
 vim.api.nvim_set_keymap('n', '<leader>/', 'gcc', { noremap = false, silent = true })
@@ -242,9 +239,9 @@ vim.opt.clipboard:append("unnamedplus")
 vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20"
 vim.opt.nu = true
 vim.opt.relativenumber = true
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
