@@ -91,6 +91,11 @@ bindkey "^F" fp_command
 # Bind Control + t to run `fd_command`
 bindkey "^T" fd_command
 
+# Bind Ctrl+K to search backward through command history
+bindkey '^K' history-search-backward
+
+# Bind Ctrl+J to search forward through command history
+bindkey '^J' history-search-forward
 
 
 # Source additional scripts (if any)
