@@ -12,6 +12,7 @@ esac
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
+
 # append to the history file, don't overwrite it
 shopt -s histappend
 
@@ -76,7 +77,11 @@ bind '"\C-g":"fp\n"'
 bind '"\C-f":"fp\n"'
 bind '"\C-t":"fd\n"'
 
+# Bind Ctrl+K to search backward through command history
+bind '"\C-k": history-search-backward'
 
+# Bind Ctrl+J to search forward through command history
+bind '"\C-j": history-search-forward'
 
 t() {
     nvim .
