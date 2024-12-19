@@ -50,6 +50,8 @@ use {
     end
   }
 
+  use {"neoclide/coc.nvim", branch = "release"}
+
 
   -- Lazygit integration
   use {
@@ -150,7 +152,20 @@ function format()
     print("No formatter available.")
 end
 
+-- Toggle true/false function
+function ToggleTrueFalse()
+  -- Get the current word under the cursor
+  local current_word = vim.fn.expand('<cword>')
 
+  -- Check if the word is 'true' or 'false' and toggle it
+  if current_word == 'true' then
+    -- Replace 'true' with 'false' on the current line
+    vim.cmd("normal! ciwfalse")
+  elseif current_word == 'false' then
+    -- Replace 'false' with 'true' on the current line
+    vim.cmd("normal! ciwtrue")
+  end
+end
 
 
 -- Leader key
@@ -182,6 +197,8 @@ vim.api.nvim_set_keymap('n', '<C-j>', ':lua require("harpoon.ui").nav_prev()<CR>
 vim.api.nvim_set_keymap('n', '<leader>/', 'gcc', { noremap = false, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>/', 'gc', { noremap = false, silent = true })
 
+-- Keybinding to toggle true/false
+vim.api.nvim_set_keymap('n', '<Leader>tf', ':lua ToggleTrueFalse()<CR>', { noremap = true, silent = true })
 
 -- CoC bindings for navigating completion suggestions without using C-n and C-p
 vim.api.nvim_set_keymap("i", "<C-j>", "coc#pum#next(1)", { silent = true, expr = true, noremap = true })  -- Move down
