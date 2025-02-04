@@ -1,4 +1,4 @@
--- Initialize packer.nvim if it's not installed
+
 vim.cmd [[packadd packer.nvim]]
 
 -- Use packer to manage plugins
@@ -115,6 +115,28 @@ use {
       end
   }
 
+function ColorMyPencils(color)
+	color = color or "rose-pine-moon"
+	vim.cmd.colorscheme(color)
+
+	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+end
+
+  -- rose pine moon theme
+  use {
+      'rose-pine/neovim',
+      name = 'rose-pine',
+      config = function()
+          require('rose-pine').setup({
+              disable_background = true,
+              styles = {
+                  italic = true,
+              },
+          })
+          vim.cmd('colorscheme rose-pine')
+      end
+  }
   -- -- CoC for additional language support
   -- use {
   --     'neoclide/coc.nvim',
@@ -129,6 +151,8 @@ use {
     require('packer').sync()
   end
 end)
+
+
 
 
 -- Setup LSP servers only when they are manually installed
@@ -269,9 +293,9 @@ vim.opt.clipboard:append("unnamedplus")
 vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20"
 vim.opt.nu = true
 vim.opt.relativenumber = true
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
