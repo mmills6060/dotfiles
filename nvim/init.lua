@@ -1,8 +1,6 @@
-
-vim.cmd [[packadd packer.nvim]]
-
 -- Use packer to manage plugins
 require('packer').startup(function(use)
+    
   -- Packer itself
   use 'wbthomason/packer.nvim'
   
@@ -50,7 +48,6 @@ use {
   }
 
   use {"neoclide/coc.nvim", branch = "release"}
-
 
   -- Lazygit integration
   use {
@@ -104,7 +101,7 @@ use {
       end
   }
 
-  -- VSCode theme
+        -- VSCode theme
   use {
       'Mofiqul/vscode.nvim',
       config = function()
@@ -114,14 +111,6 @@ use {
           vim.cmd('colorscheme vscode')
       end
   }
-
-function ColorMyPencils(color)
-	color = color or "rose-pine-moon"
-	vim.cmd.colorscheme(color)
-
-	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-end
 
   -- rose pine moon theme
   use {
@@ -137,6 +126,7 @@ end
           vim.cmd('colorscheme rose-pine')
       end
   }
+
   -- -- CoC for additional language support
   -- use {
   --     'neoclide/coc.nvim',
@@ -151,8 +141,6 @@ end
     require('packer').sync()
   end
 end)
-
-
 
 
 -- Setup LSP servers only when they are manually installed
@@ -258,6 +246,8 @@ vim.api.nvim_set_keymap('n', '<leader>gg', '<cmd>LazyGitCurrentFile<CR>', { nore
 vim.api.nvim_set_keymap('v', 'y', '"+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'Y', '"+yg_', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '}', '}zz', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '{', '{zz', { noremap = true, silent = true })
 
 -- file explorer
 vim.api.nvim_set_keymap('n', '<leader>e', ':e.<CR>', { noremap = true, silent = true })
@@ -300,3 +290,11 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.cursorline = true
+
+
+
+vim.o.autoread = true
+vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+    pattern = "*",
+    command = "if mode() != 'c' | checktime | endif",
+})
