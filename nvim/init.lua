@@ -6,6 +6,8 @@ require('packer').startup(function(use)
   
   -- Utility library for plugins (required by many plugins)
   use 'nvim-lua/plenary.nvim'
+  use 'MunifTanjim/nui.nvim'
+  use 'HakonHarnes/img-clip.nvim'
   
     -- Mason for managing LSP servers and other tools
     use { "williamboman/mason.nvim",
@@ -39,6 +41,44 @@ use {
     end
 }
 
+use {
+  "folke/trouble.nvim",
+  requires = "kyazdani42/nvim-web-devicons",
+  config = function()
+    require("trouble").setup({})
+  end,
+}
+
+
+
+
+-- use {
+--   "supermaven-inc/supermaven-nvim",
+--   config = function()
+--     require("supermaven-nvim").setup({})
+--   end,
+-- }
+
+
+
+-- use {
+--   "yetone/avante.nvim",
+--   config = function()
+--     require("avante").setup({
+--       enable_chat = true,
+--       vendors = {
+--         ollama = {
+--           __inherited_from = "openai",
+--           api_key_name = "",
+--           endpoint = "http://localhost:11434/v1",  -- Correct API URL
+--           model = "llama2:7b",
+--         },
+--       system_prompt = "You are a helpful AI assistant for Neovim.",
+--       chat_window = { border = "rounded", width = 0.8, height = 0.7 },
+--     } })
+--   end
+-- }
+
   -- Harpoon: Mark files and quickly navigate between them
   use {
     "ThePrimeagen/harpoon",
@@ -71,7 +111,6 @@ use {
         require("ibl").setup({})
     end
   }
-
   -- Telescope for fuzzy finding
   use {'nvim-telescope/telescope.nvim'}
   require('telescope').setup {
@@ -101,16 +140,16 @@ use {
       end
   }
 
-        -- VSCode theme
-  use {
-      'Mofiqul/vscode.nvim',
-      config = function()
-          require('vscode').setup({
-              transparent = false,
-          })
-          vim.cmd('colorscheme vscode')
-      end
-  }
+  --       -- VSCode theme
+  -- use {
+  --     'Mofiqul/vscode.nvim',
+  --     config = function()
+  --         require('vscode').setup({
+  --             transparent = false,
+  --         })
+  --         vim.cmd('colorscheme vscode')
+  --     end
+  -- }
 
   -- rose pine moon theme
   use {
@@ -126,6 +165,13 @@ use {
           vim.cmd('colorscheme rose-pine')
       end
   }
+
+
+
+
+
+
+
 
   -- -- CoC for additional language support
   -- use {
@@ -259,6 +305,9 @@ vim.g.copilot_no_tab_map = true
 -- Map Control-l to accept Copilot suggestions
 vim.api.nvim_set_keymap("i", "<C-l>", 'copilot#Accept("<CR>")', { silent = true, expr = true, noremap = true })
 
+-- Trouble keybindings
+vim.api.nvim_set_keymap('n', '<leader>t', '<cmd>Trouble diagnostics toggle focus=true<cr>', { noremap = true, silent = true })
+
 
 vim.api.nvim_create_autocmd('filetype', {
   pattern = 'netrw',
@@ -290,8 +339,7 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.cursorline = true
-
-
+vim.opt.swapfile = false
 
 vim.o.autoread = true
 vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
