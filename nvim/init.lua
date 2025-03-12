@@ -41,16 +41,28 @@ use {
     end
 }
 
+-- Treesitter
+use({"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"})
+use("nvim-treesitter/playground")
+
+
 use {
-  "folke/trouble.nvim",
+  "nvim-tree/nvim-tree.lua",
   requires = "kyazdani42/nvim-web-devicons",
   config = function()
-    require("trouble").setup({})
+    require("nvim-tree").setup({
+     view = {
+        width = 60,
+      }
+    })
   end,
 }
 
-
-
+use {"folke/trouble.nvim"
+  , config = function()
+    require("trouble").setup({})
+  end
+}
 
 -- use {
 --   "supermaven-inc/supermaven-nvim",
@@ -61,29 +73,40 @@ use {
 
 
 
--- use {
---   "yetone/avante.nvim",
---   config = function()
---     require("avante").setup({
---       enable_chat = true,
---       vendors = {
---         ollama = {
---           __inherited_from = "openai",
---           api_key_name = "",
---           endpoint = "http://localhost:11434/v1",  -- Correct API URL
---           model = "llama2:7b",
---         },
---       system_prompt = "You are a helpful AI assistant for Neovim.",
---       chat_window = { border = "rounded", width = 0.8, height = 0.7 },
---     } })
---   end
--- }
 
+  -- Required plugins
+  use 'stevearc/dressing.nvim'
+  use 'MeanderingProgrammer/render-markdown.nvim'
+
+  -- Avante.nvim with build process
+  -- Need to run :AvanteBuild in order to get rid of error
+  use {
+    'yetone/avante.nvim',
+    branch = 'main',
+    run = 'make',
+    config = function()
+      require('avante').setup({
+        provider = "ollama",
+        behavior = {
+          enable_cursor_planning_mode = true,
+        },
+        ollama = {
+          endpoint = "http://127.0.0.1:11434", -- Note that there is no /v1 at the end.
+          -- model = "llama2:latest",
+          model = "deepseek-r1:32b",
+        },
+      })
+    end
+  }
   -- Harpoon: Mark files and quickly navigate between them
   use {
     "ThePrimeagen/harpoon",
     config = function()
-        require("harpoon").setup({})
+        require("harpoon").setup({
+          menu = {
+            width = 100,
+          },
+        })
     end
   }
 
@@ -104,13 +127,15 @@ use {
     },
   }
 
-  -- Indentation lines
-  use {
-    "lukas-reineke/indent-blankline.nvim",
-    config = function()
-        require("ibl").setup({})
-    end
-  }
+  -- -- Indentation lines
+  -- use {
+  --   "lukas-reineke/ibl.nvim",
+  --   config = function()
+  --       require("ibl").setup({})
+  --   end
+  -- }
+  --
+  --
   -- Telescope for fuzzy finding
   use {'nvim-telescope/telescope.nvim'}
   require('telescope').setup {
@@ -127,9 +152,6 @@ use {
   }
 
 
-  -- Treesitter
-  use({"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"})
-  use("nvim-treesitter/playground")
 
   
   -- Comment plugin
@@ -209,20 +231,20 @@ function format()
     print("No formatter available.")
 end
 
--- Toggle true/false function
-function ToggleTrueFalse()
-  -- Get the current word under the cursor
-  local current_word = vim.fn.expand('<cword>')
-
-  -- Check if the word is 'true' or 'false' and toggle it
-  if current_word == 'true' then
-    -- Replace 'true' with 'false' on the current line
-    vim.cmd("normal! ciwfalse")
-  elseif current_word == 'false' then
-    -- Replace 'false' with 'true' on the current line
-    vim.cmd("normal! ciwtrue")
-  end
-end
+-- -- Toggle true/false function
+-- function ToggleTrueFalse()
+--   -- Get the current word under the cursor
+--   local current_word = vim.fn.expand('<cword>')
+--
+--   -- Check if the word is 'true' or 'false' and toggle it
+--   if current_word == 'true' then
+--     -- Replace 'true' with 'false' on the current line
+--     vim.cmd("normal! ciwfalse")
+--   elseif current_word == 'false' then
+--     -- Replace 'false' with 'true' on the current line
+--     vim.cmd("normal! ciwtrue")
+--   end
+-- end
 
 
 -- Leader key
@@ -256,7 +278,7 @@ vim.api.nvim_set_keymap('n', '<leader>/', 'gcc', { noremap = false, silent = tru
 vim.api.nvim_set_keymap('v', '<leader>/', 'gc', { noremap = false, silent = true })
 
 -- Keybinding to toggle true/false
-vim.api.nvim_set_keymap('n', '<Leader>tf', ':lua ToggleTrueFalse()<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<Leader>tf', ':lua ToggleTrueFalse()<CR>', { noremap = true, silent = true })
 
 -- CoC bindings for navigating completion suggestions without using C-n and C-p
 vim.api.nvim_set_keymap("i", "<C-j>", "coc#pum#next(1)", { silent = true, expr = true, noremap = true })  -- Move down
@@ -277,12 +299,18 @@ vim.api.nvim_set_keymap('n', '<leader>l', ':lua format()<CR>', { noremap = true,
 vim.api.nvim_set_keymap('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
 -- Show hover documentation (K)
 vim.api.nvim_set_keymap('n', 'K', ':lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'vrr', ':lua vim.lsp.buf.references()<CR>', { noremap = true, silent = true })
 -- Go to type definition
 vim.api.nvim_set_keymap('n', 'gt', ':lua vim.lsp.buf.type_definition()<CR>', { noremap = true, silent = true })
 -- Show signature help
 vim.api.nvim_set_keymap('n', 'gs', ':lua vim.lsp.buf.signature_help()<CR>', { noremap = true, silent = true })
 -- Rename symbol (not typically bound by default)
 vim.api.nvim_set_keymap('n', '<leader>rn', ':lua vim.lsp.buf.rename()<CR>', { noremap = true, silent = true })
+-- Code actions
+-- vim.api.nvim_set_keymap('n', '<leader>a', ':lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
+-- Avante
+vim.api.nvim_set_keymap('n', '<leader>aa', ':AvanteToggle<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ae', ':AvanteEdit<CR>', { noremap = true, silent = true })
 
 
 -- Git keybinding
@@ -296,7 +324,8 @@ vim.api.nvim_set_keymap('n', '}', '}zz', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '{', '{zz', { noremap = true, silent = true })
 
 -- file explorer
-vim.api.nvim_set_keymap('n', '<leader>e', ':e.<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>e', ':e.<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
 -- Configure Tab key for Copilot
 vim.g.copilot_no_tab_map = true
