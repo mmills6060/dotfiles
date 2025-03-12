@@ -92,8 +92,9 @@ use {"folke/trouble.nvim"
         },
         ollama = {
           endpoint = "http://127.0.0.1:11434", -- Note that there is no /v1 at the end.
+          model = "deepseek-coder-v2:16b",
           -- model = "llama2:latest",
-          model = "deepseek-r1:32b",
+          -- model = "deepseek-r1:32b",
         },
       })
     end
@@ -253,6 +254,10 @@ vim.g.mapleader = " "
 -- Keybindings
 vim.api.nvim_set_keymap('n', '<leader>ha', ':lua require("harpoon.mark").add_file()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>hh', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', { noremap = true, silent = true })
+
+-- Keep visual selection after indenting
+vim.api.nvim_set_keymap('v', '>', '>gv', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<', '<gv', { noremap = true, silent = true })
 
 -- Telescope bindings
 vim.api.nvim_set_keymap('n', '<leader>ff', ':lua require("telescope.builtin").find_files()<CR>', { noremap = true, silent = true })
