@@ -9,6 +9,10 @@ require('packer').startup(function(use)
   use 'MunifTanjim/nui.nvim'
   use 'HakonHarnes/img-clip.nvim'
   
+  -- Git integration
+  use 'tpope/vim-fugitive'
+  use 'tpope/vim-rhubarb'  -- Required for GitHub integration with fugitive
+
     -- Mason for managing LSP servers and other tools
     use { "williamboman/mason.nvim",
         config = function()
@@ -57,6 +61,36 @@ use {
     })
   end,
 }
+
+use { "sindrets/diffview.nvim",
+  config = function()
+    require("diffview").setup()
+  end
+}
+
+use {
+    "ThePrimeagen/refactoring.nvim",
+    requires = {
+        {"nvim-lua/plenary.nvim"},
+        {"nvim-treesitter/nvim-treesitter"}
+    }
+}
+
+
+use {
+  'pwntester/octo.nvim',
+  requires = {
+    'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope.nvim',
+    -- OR 'ibhagwan/fzf-lua',
+    -- OR 'folke/snacks.nvim',
+    'nvim-tree/nvim-web-devicons',
+  },
+  config = function ()
+    require"octo".setup()
+  end
+}
+
 
 use {"folke/trouble.nvim"
   , config = function()
@@ -190,6 +224,16 @@ use {"folke/trouble.nvim"
   }
 
 
+use {
+  'gelguy/wilder.nvim',
+  config = function()
+    local wilder = require('wilder')
+    wilder.setup({ modes = { ':', '/', '?' } })
+    wilder.set_option('renderer', wilder.popupmenu_renderer({
+      highlighter = wilder.basic_highlighter(),
+    }))
+  end
+}
 
 
 
@@ -321,6 +365,9 @@ vim.api.nvim_set_keymap('n', '<leader>ae', ':AvanteEdit<CR>', { noremap = true, 
 -- Git keybinding
 vim.api.nvim_set_keymap('n', '<leader>gg', '<cmd>LazyGitCurrentFile<CR>', { noremap = true, silent = true })
 
+-- Github keybinding
+vim.api.nvim_set_keymap('n', '<leader>gh', '<cmd>GBrowse<CR>', { noremap = true, silent = true })
+
 -- Yank (copy) and paste with system clipboard
 vim.api.nvim_set_keymap('v', 'y', '"+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'Y', '"+yg_', { noremap = true, silent = true })
@@ -376,6 +423,10 @@ vim.opt.cursorline = true
 vim.opt.swapfile = false
 
 vim.o.autoread = true
+vim.opt.wildmenu = true
+vim.opt.wildmode = "longest:full,full"
+vim.opt.wildoptions = "pum"
+
 vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
     pattern = "*",
     command = "if mode() != 'c' | checktime | endif",
