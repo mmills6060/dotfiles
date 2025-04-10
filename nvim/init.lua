@@ -33,17 +33,17 @@ require('packer').startup(function(use)
     }
 
 -- null-ls configuration without specific sources (auto-detect from Mason)
-use {
-    'jose-elias-alvarez/null-ls.nvim',
-    requires = { 'nvim-lua/plenary.nvim' },
-    config = function()
-        local null_ls = require("null-ls")
-        null_ls.setup({
+--use {
+--    'jose-elias-alvarez/null-ls.nvim',
+--    requires = { 'nvim-lua/plenary.nvim' },
+--    config = function()
+--        local null_ls = require("null-ls")
+--        null_ls.setup({
             -- Sources will be detected dynamically by Mason
-            sources = {},
-        })
-    end
-}
+--            sources = {},
+--        })
+--    end
+--}
 
 -- Treesitter
 use({"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"})
@@ -310,6 +310,12 @@ vim.api.nvim_set_keymap('n', '<leader>fp', ':lua require("telescope.builtin").fi
 vim.api.nvim_set_keymap('n', '<leader>fb', ':lua require("telescope.builtin").buffers()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>fc', ':lua require("telescope.builtin").current_buffer_fuzzy_find()<CR>', { noremap = true, silent = true })
 
+-- Diffview bindings
+vim.api.nvim_set_keymap('n', '<leader>dv', ':DiffviewOpen dev<CR>', { noremap = true, silent = true })
+
+-- Find and replace bindings
+vim.api.nvim_set_keymap('n', '<leader>fr', ':%s/', { noremap = true, silent = true })
+
 
 -- Harpoon navigation
 vim.api.nvim_set_keymap('n', '<C-k>', ':lua require("harpoon.ui").nav_next()<CR>', { noremap = true, silent = true })
@@ -408,6 +414,17 @@ vim.api.nvim_create_autocmd('filetype', {
   end
 })
 
+vim.diagnostic.config({
+  virtual_text = {
+    spacing = 4,
+  },
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+})
+
+
 -- General Neovim options
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20"
@@ -421,7 +438,6 @@ vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.cursorline = true
 vim.opt.swapfile = false
-
 vim.o.autoread = true
 vim.opt.wildmenu = true
 vim.opt.wildmode = "longest:full,full"
