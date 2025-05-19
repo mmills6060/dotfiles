@@ -45,9 +45,6 @@
 - ranger
 - speedtest-cli
 - termdown
-
-# Bash
-
-- bash-completion
+- ts-prune
 
 
