@@ -40,6 +40,7 @@
 - Leader + e = NvimTree Toggle
 
 # CLI Tools
+- navi
 - taskwarrior-tui
 - gotop
 - ranger
