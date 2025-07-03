@@ -16,6 +16,7 @@
 - wsl
 - aerospace
 - vscode
+- slack
 
 # CLI Tools
 - taskwarrior-tui
