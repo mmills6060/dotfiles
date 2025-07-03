@@ -215,6 +215,16 @@ main() {
         echo "✅ Alacritty themes copied"
     fi
     
+    # Configure Git
+    echo "📝 Configuring Git..."
+    if command_exists git; then
+        git config --global user.name "Michael Mills"
+        git config --global user.email "mmills6060@gmail.com"
+        echo "✅ Git configuration completed"
+    else
+        echo "❌ Git not found, configuration skipped"
+    fi
+    
     # Install Neovim plugins
     echo "📦 Installing Neovim plugins..."
     if command_exists nvim; then
