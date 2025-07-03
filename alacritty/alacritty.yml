@@ -7,6 +7,12 @@ window:
   dimensions:
     columns: 120
     lines: 80
+
+# Shell configuration
+shell:
+  program: bash
+  args:
+    - -l
 import:
   - ~/.config/alacritty/themes/themes/nord.yaml
 # Font configuration

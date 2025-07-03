@@ -14,6 +14,8 @@
 - node js
 - homebrew
 - wsl
+- aerospace
+- vscode
 
 # CLI Tools
 - taskwarrior-tui
@@ -22,6 +24,15 @@
 - ts-prune
 - neofetch
 - git
+- fzf
+- gh
+- git
+- lazygit
+- node
+- tmux
+- yarn
+- poetry
+- 
   
 # Terminal Keybinds
 
@@ -57,6 +68,9 @@
 - Leader + gg = Lazygit
 - Leader + e = NvimTree Toggle
 
+# Run in Git Bash or WSL
+chmod +x windows-install.sh
+./windows-install.sh
 
 
 
