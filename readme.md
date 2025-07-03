@@ -14,6 +14,14 @@
 - node js
 - homebrew
 - wsl
+
+# CLI Tools
+- taskwarrior-tui
+- gotop
+- ranger
+- ts-prune
+- neofetch
+- git
   
 # Terminal Keybinds
 
@@ -49,13 +57,6 @@
 - Leader + gg = Lazygit
 - Leader + e = NvimTree Toggle
 
-# CLI Tools
-- navi
-- taskwarrior-tui
-- gotop
-- ranger
-- speedtest-cli
-- termdown
-- ts-prune
+
 
 
