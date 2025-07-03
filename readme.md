@@ -1,11 +1,20 @@
-# Contents
+# Linux Contents
 - OS: Ubuntu 24.04.2
 - DE: Gnome 46.0
 - OS Font: San Francisco Pro
 - Terminal: Alacritty
 - Terminal Font: San Francisco Mono
-- Shell: bash
+- Shell: oh my zsh
 
+# Apps Used
+- chrome
+- cursor
+- spotify
+- chrome remote desktop
+- node js
+- homebrew
+- wsl
+  
 # Terminal Keybinds
 
 - Ctrl - f = search projects directories
@@ -18,7 +27,8 @@
 - f = search entire computer
 - fp = search projects directory
 - fd = search for folders in projects directory
-- t = nvim .
+- n = nvim .
+- g = lazygit
 
  # Tmux Commands
 
